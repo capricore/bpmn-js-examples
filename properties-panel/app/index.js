@@ -99,6 +99,44 @@ function registerFileDrop(container, callback) {
   container.get(0).addEventListener('drop', handleFileSelect, false);
 }
 
+function registerFileOpen(callback) {
+  
+    var inputElement = document.getElementById("files");
+    
+    function handleFileSelect(e) {
+  
+      var files = inputElement.files;
+  
+      var file = files[0];
+      
+      var reader = new FileReader();
+            
+      reader.onload = function(e) {
+  
+        var xml = e.target.result;
+
+        callback(xml);
+      };
+  
+      reader.readAsText(file);
+    }
+    inputElement.addEventListener("change", handleFileSelect, false);
+}
+
+
+    
+function contentChange() {
+  var inputElement = document.getElementById("content");
+  if(inputElement.value != "1")
+  {
+    //window.alert("value changed.");
+    openDiagram(inputElement.value);
+  }else
+    setTimeout(contentChange, 1000); //循环调用触发setTimeout        
+}
+
+setTimeout(contentChange, 1000); //循环调用触发setTimeout      
+
 
 ////// file drag / drop ///////////////////////
 
@@ -109,6 +147,9 @@ if (!window.FileList || !window.FileReader) {
     'Try using Chrome, Firefox or the Internet Explorer > 10.');
 } else {
   registerFileDrop(container, openDiagram);
+  registerFileOpen(openDiagram) ;
+  //registerSetContent(openDiagram) ;
+  
 }
 
 // bootstrap diagram functions
@@ -137,7 +178,7 @@ $(document).on('ready', function() {
 
     if (data) {
       link.addClass('active').attr({
-        'href': 'data:application/bpmn20-xml;charset=UTF-8,' + encodedData,
+        'href': 'data:application/octet-stream;charset=UTF-8,' + encodedData,
         'download': name
       });
     } else {

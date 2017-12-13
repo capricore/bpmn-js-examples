@@ -9,10 +9,10 @@
 </head>
 <body>
   <div class="content" id="js-drop-zone">
-
+    <input type="hidden" id="content" value="1"/>
     <div class="message intro">
       <div class="note">
-        Drop BPMN diagram from your desktop or <a id="js-create-diagram" href>create a new diagram</a> to get started.
+        Open a BPMN diagram <input type="file" id="files" name="files" /> or <a id="js-create-diagram" href>create a new diagram</a> to get started.
       </div>
     </div>
 
@@ -47,5 +47,7 @@
     </li>
   </ul>
 
-  <script src="index.js"></script>
+  <script src="index.js">
+    document.getElementById("files").onclick();
+  </script>
 </html>
